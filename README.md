@@ -5,7 +5,7 @@
 - Sell E-Bikes
 - Login and Account Management
 
-## Tech Stack:
+## Technologies
 This project was developed using the following technologies;
 
 - Java
@@ -23,7 +23,7 @@ This project was developed using the following technologies;
 - RHEL Based Monolith VM deployed on non-kubernetes env
 - Rehost the VM on OpenShift using CNV
 
-## Features for User
+### Application Features
 
  1. Website pages
     -   Welcome page
@@ -41,9 +41,6 @@ This project was developed using the following technologies;
   
 
 ## To Run:
-
-  
-
 Ensure you the data requirements settled, then use the `mvnw` bin or IntelliJ runner to start the application.
 
   
@@ -51,7 +48,6 @@ Ensure you the data requirements settled, then use the `mvnw` bin or IntelliJ ru
 ### Database
 
 The bike_commerce application uses two databases;
-
 The SQL Server database should have the following table;
 
 *  `employees` table for storing employees data
