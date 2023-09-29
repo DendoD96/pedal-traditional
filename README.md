@@ -1,4 +1,4 @@
-# Pedal - Traditional Java Applications
+# pedal-traditional
 
 `pedal-traditional` is an e-commerce application built with Java and uses SpringBoot and JBoss EAP for
 - Overview of the company and it's products
