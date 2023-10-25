@@ -21,15 +21,20 @@ Follow the instructions provided in the [Red Hat Documentation](https://access.r
 
 ```bash
 sqlcmd -S <SERVER_NAME> -U <USERNAME> -P <PASSWORD> -i employees.sql
+```
 
 #### PostgreSQL Server on Main Machine
 On the main machine, run the users.sql script to set up the necessary tables in the PostgreSQL database.
+
+```bash
 psql -U <USERNAME> -d <DATABASE_NAME> -a -f users.sql
+```
 
 ### Deploying the Application
 Find the .war file in the /out/artifacts/bike_commerce_jar folder. 
 Copy the application .war file to the deployments directory of the domain controller.
 Start the domain controller and host controllers on both machines
 
+```bash
 ./domain.sh -c domain.xml
-
+```
