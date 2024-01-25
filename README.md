@@ -93,4 +93,4 @@ The image below also shows the data diagram;
 
 
 ## Deploying the Application
-- Coming soon
+- [Deploy.md](https://github.com/redhat-developer-demos/pedal-traditional/blob/main/Deploy.md) 
