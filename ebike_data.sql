@@ -1,29 +1,32 @@
-create table if not exists bikes (
-                                     id serial primary key,
-                                     name varchar(100) not null,
-    warranty_status char(10),
-    image bytea,
-    model varchar(50) not null,
-    price int not null,
-    date_created timestamp not null default CURRENT_TIMESTAMP
-    )
+-- Create the 'bikes' table
+CREATE TABLE IF NOT EXISTS bikes (
+                                     id SERIAL PRIMARY KEY,
+                                     name VARCHAR(100) NOT NULL,
+    warranty_status CHAR(10),
+    image BYTEA,
+    model VARCHAR(50) NOT NULL,
+    price INT NOT NULL,
+    date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
 
-create table if not exists service_user (
-                                            id serial primary key,
-                                            fullname varchar(150) not null,
-    username varchar(50) not null,
-    email varchar(75) not null,_
-    user_role varchar(50) not null,
-    password varchar(75) not null,
-    date_created timestamp not null default CURRENT_TIMESTAMP
-    )
+-- Create the 'service_user' table
+CREATE TABLE IF NOT EXISTS service_user (
+                                            id SERIAL PRIMARY KEY,
+                                            fullname VARCHAR(150) NOT NULL,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(75) NOT NULL,
+    user_role VARCHAR(50) NOT NULL,
+    password VARCHAR(75) NOT NULL,
+    date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
 
-create table if not exists bike_order (
-                                          id serial primary key,
-                                          date_created timestamp not null default CURRENT_TIMESTAMP,
-                                          product_id int not null,
-                                          customer_id int not null,
-                                          price int not null,
-                                          constraint fk_customer foreign key(customer_id) references service_user(id),
-    constraint fk_product foreign key(product_id) references bikes(id)
-    )
+-- Create the 'bike_order' table
+CREATE TABLE IF NOT EXISTS bike_order (
+                                          id SERIAL PRIMARY KEY,
+                                          date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                          product_id INT NOT NULL,
+                                          customer_id INT NOT NULL,
+                                          price INT NOT NULL,
+                                          CONSTRAINT fk_customer FOREIGN KEY (customer_id) REFERENCES service_user(id),
+    CONSTRAINT fk_product FOREIGN KEY (product_id) REFERENCES bikes(id)
+    );
