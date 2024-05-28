@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -41,19 +42,23 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain customersSecurityFilterChain(HttpSecurity http) throws Exception {
-        return
-                http
-                        .csrf().disable()
-                        .authorizeHttpRequests()
-                        .requestMatchers("/", "/login", "/contact-support", "/signup","/employees/login").permitAll()
-                        .and()
-                        .authorizeHttpRequests()
-                        .requestMatchers("/dashboard/**").authenticated()
-                        .and()
-                        .formLogin()
-                        .loginPage("/login")
-                        .permitAll()
-                        .and().build();
+        return http
+                .csrf().disable()
+                .authorizeHttpRequests(authorizeRequests ->
+                        authorizeRequests
+                                .requestMatchers(new AntPathRequestMatcher("/"),
+                                        new AntPathRequestMatcher("/login"),
+                                        new AntPathRequestMatcher("/contact-support"),
+                                        new AntPathRequestMatcher("/signup"),
+                                        new AntPathRequestMatcher("/employees/login")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/dashboard/**")).authenticated()
+                )
+                .formLogin(formLogin ->
+                        formLogin
+                                .loginPage("/login")
+                                .permitAll()
+                )
+                .build();
     }
 //    }
 
