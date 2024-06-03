@@ -89,49 +89,57 @@
             <div class="mb-6">
                 <p class="text-2xl"> All Available Bikes </p>
             </div>
-
-            <ul style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))" class="grid gap-20">
-                <li th:each="bike: ${bikes}">
-                    <div class="border-2 w-[300px]">
-                        <div class="w-full h-[150px] relative">
-                            <img src="https://res.cloudinary.com/dkfptto8m/image/upload/v1687810622/bike-cover.jpg" class="w-full" alt="bike"/>
-
-                            <div class="absolute right-0 top-0">
-                                <button class="bg-[#3C5924;] text-sm w-full px-6 h-[30px] text-[#fff]">
-                                    Contact Support
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="p-4">
-                            <div class="mb-4">
-                                <p>
-                                    <span class="text-xl font-semibold mb-2" th:text="${bike.name}">  </span>
-                                    <span class="text-gray-400 ml-1" th:text="'(' + ${bike.model} + ')'">  </span>
-                                </p>
-
-                                <div class="flex justify-between">
-                                    <p class="text-lg" th:text="'$' + ${bike.price}"></p>
-
-                                    <div>
-                                        <p><span class="font-semibold"> Warranty: </span> <span
-                                                th:text="${bike.warranty_status}">  </span></p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <a th:href="'dashboard/bike/purchase?bikeId=' + ${bike.id}">
-                                <button class="bg-[#3C5924;]  w-full px-6 h-[40px] rounded text-[#fff]">
-                                    Purchase Bike
-                                </button>
-                            </a>
-                        </div>
-                    </div>
-                </li>
+            <ul id="bike-list" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))"
+                class="grid gap-20">
+                <!-- Bikes will be populated here by JavaScript -->
             </ul>
-
         </div>
     </section>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch('http://bike-pedal-refactoring.apps.ocpdemo.vega.local/api/bikes')
+            .then(response => response.json())
+            .then(data => {
+                const bikeList = document.getElementById('bike-list');
+                data.forEach(bike => {
+                    const bikeItem = document.createElement('li');
+                    bikeItem.innerHTML = `
+                        <div class="border-2 w-[300px]">
+                            <div class="w-full h-[150px] relative">
+                                <img src="https://res.cloudinary.com/dkfptto8m/image/upload/v1687810622/bike-cover.jpg" class="w-full" alt="bike"/>
+                                <div class="absolute right-0 top-0">
+                                    <button class="bg-[#3C5924] text-sm w-full px-6 h-[30px] text-[#fff]">
+                                        Contact Support
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <div class="mb-4">
+                                    <p>
+                                        <span class="text-xl font-semibold mb-2">${bike.name}</span>
+                                        <span class="text-gray-400 ml-1">(${bike.model})</span>
+                                    </p>
+                                    <div class="flex justify-between">
+                                        <p class="text-lg">$${bike.price}</p>
+                                        <div>
+                                            <p><span class="font-semibold"> Warranty: </span> <span>${bike.warrantyStatus}</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="/dashboard/order?bikeId=${bike.id}">
+                                    <button class="bg-[#3C5924] w-full px-6 h-[40px] rounded text-[#fff]">
+                                        Purchase Bike
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                    bikeList.appendChild(bikeItem);
+                });
+            })
+            .catch(error => console.error('Error fetching bikes:', error));
+    });
+</script>
 </body>
 </html>
