@@ -1,11 +1,14 @@
 package com.example.bike_commerce.controllers;
 
 import com.example.bike_commerce.configuration.UserInfoUserDetails;
+import com.example.bike_commerce.customers.entities.Order;
 import com.example.bike_commerce.customers.repositories.OrderRepository;
 import com.example.bike_commerce.employees.entities.Employees;
 import com.example.bike_commerce.services.CustomersService;
 import com.example.bike_commerce.services.EmployeesService;
 import com.example.bike_commerce.services.OrderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -14,16 +17,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 public class DashboardController {
     @Autowired
     EmployeesService employeesService;
+    private static final Logger log = LoggerFactory.getLogger(redhat.engineering.ebikes.controller.BikeController.class);
 
     @Autowired
     CustomersService customersService;
 
     @Autowired
-    OrderRepository orderRepository;
+    OrderService orderService;
 
     @GetMapping("/dashboard/customers")
     public String customers(Model model) {
@@ -56,7 +62,8 @@ public class DashboardController {
 
     @GetMapping("/dashboard/profile")
     public String profile(@AuthenticationPrincipal UserInfoUserDetails user, Model model) {
-//        model.addAttribute("orders", orderRepository.findOrdersByUserId(user.getId()));
+        List<Order> orders = orderService.getOrdersForUser(user.getId());
+        model.addAttribute("orders", orders);
 
         return "/dashboard/profile";
     }

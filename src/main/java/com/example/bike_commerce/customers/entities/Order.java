@@ -13,10 +13,10 @@ public class Order {
     private Long id;
 
     @Column(name = "product_id")
-    private String product_id;
+    private int product_id;
 
     @Column(name = "customer_id")
-    private String customer_id;
+    private int customer_id;
 
     @Column(name = "date_created")
     private Date date_created;
@@ -29,11 +29,11 @@ public class Order {
         return date_created;
     }
 
-    public String getCustomerId() {
+    public int getCustomerId() {
         return customer_id;
     }
 
-    public String getProductId() {
+    public int getProductId() {
         return product_id;
     }
 
@@ -46,11 +46,11 @@ public class Order {
         this.date_created = dateCreated;
     }
 
-    public void setCustomerId(String customer_id) {
+    public void setCustomerId(int customer_id) {
         this.customer_id = customer_id;
     }
 
-    public void setProductId(String product_id) {
+    public void setProductId(int product_id) {
         this.product_id = product_id;
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,7 +44,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain customersSecurityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf().disable()
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers(new AntPathRequestMatcher("/"),
@@ -51,7 +52,7 @@ public class SecurityConfig {
                                         new AntPathRequestMatcher("/contact-support"),
                                         new AntPathRequestMatcher("/signup"),
                                         new AntPathRequestMatcher("/employees/login")).permitAll()
-                                .requestMatchers(new AntPathRequestMatcher("/dashboard/**")).authenticated()
+                                .requestMatchers(new AntPathRequestMatcher("/dashboard/**"), new AntPathRequestMatcher("/purchase/{bikeId}")).authenticated()
                 )
                 .formLogin(formLogin ->
                         formLogin

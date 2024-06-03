@@ -47,10 +47,10 @@ public class BikeService {
     }
 
     @Transactional
-    public void purchaseBike(Optional<Bike> bikeData) {
-        bikeData.ifPresent(bike -> entityManager.createNativeQuery("INSERT INTO bike_order(product_id, customer_id, price) VALUES (?,?,?)")
+    public void purchaseBike(Optional<Bike> bikeData, Long userId) {
+            bikeData.ifPresent(bike -> entityManager.createNativeQuery("INSERT INTO bike_order(product_id, customer_id, price) VALUES (?,?,?)")
                 .setParameter(1, bike.getId())
-                .setParameter(2, 26)
+                .setParameter(2, userId.intValue())
                 .setParameter(3, bike.getPrice())
                 .executeUpdate());
     }

@@ -37,7 +37,7 @@ public class AuthController {
         model.addAttribute("service_user", customer);
         customersService.createUser(customer);
 
-        return "redirect:/dashboard/dashboard";
+        return "redirect:/login";
     }
 
 

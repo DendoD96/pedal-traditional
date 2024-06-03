@@ -24,7 +24,7 @@
 
             <ul class="flex">
                 <li class="mr-8 flex items-center ">
-                    <p class="text-base"><a href="/customer-support"> Contact Support </a></p>
+                    <p class="text-base"><a href="/contact-support"> Contact Support </a></p>
                 </li>
 
                 <li class="mr-8 flex items-center">
@@ -124,21 +124,21 @@
                         </th>
                     </tr>
                     </thead>
-<!--                    <tbody>-->
+                    <tbody>
 
-<!--                                        <tr th:each="order: ${orders}" class="bg-white border-b">-->
-<!--                                            <th th:text="'#'+${order.id}" scope="row "-->
-<!--                                                class="px-6 py-4 font-medium italic text-gray-900 whitespace-nowrap">-->
+                    <tr th:each="order: ${orders}" class="bg-white border-b">
+                        <th th:text="'#'+${order.id}" scope="row "
+                            class="px-6 py-4 font-medium italic text-gray-900 whitespace-nowrap">
 
-<!--                                            </th>-->
-<!--                                            <td th:text="${order.productId}" class="px-6 py-4">-->
-<!--                                            </td>-->
-<!--                                            <td th:text="${order.customerId}" class="px-6 py-4">-->
-<!--                                            </td>-->
-<!--                                            <td th:text="${order.dateCreated}" class="px-6 py-4">-->
-<!--                                            </td>-->
-<!--                                        </tr>-->
-<!--                    </tbody>-->
+                        </th>
+                        <td th:text="${order.productId}" class="px-6 py-4">
+                        </td>
+                        <td th:text="${order.customerId}" class="px-6 py-4">
+                        </td>
+                        <td th:text="${order.dateCreated}" class="px-6 py-4">
+                        </td>
+                    </tr>
+                    </tbody>
                 </table>
             </div>
         </div>

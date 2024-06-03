@@ -1,18 +1,25 @@
 package com.example.bike_commerce.controllers;
 
+import com.example.bike_commerce.configuration.UserInfoUserDetails;
 import com.example.bike_commerce.customers.entities.Bike;
 import com.example.bike_commerce.services.BikeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+
 @Controller
 public class BikeController {
     @Autowired
     BikeService bikeService;
+    private static final Logger log = LoggerFactory.getLogger(redhat.engineering.ebikes.controller.BikeController.class);
+
 
     @GetMapping("/dashboard/bike/purchase")
     public String purchase(@RequestParam Long bikeId, Model model) {
@@ -26,16 +33,15 @@ public class BikeController {
 
     @PostMapping("/purchase/{bikeId}")
     public String submitPurchase(@PathVariable Long bikeId , Model model) {
+        UserInfoUserDetails userDetails = (UserInfoUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Optional<Bike> retrievedBike = bikeService.retrieveABike(bikeId);
 
         if (retrievedBike.isPresent()) {
             model.addAttribute("bike", retrievedBike);
-            bikeService.purchaseBike(retrievedBike);
-
-            return "home";
+            bikeService.purchaseBike(retrievedBike, userDetails.getId());
         }
 
-        return "redirect:/home";
+        return "redirect:/";
     }
 
     @PostMapping("/dashboard/bike/insert-bike")
